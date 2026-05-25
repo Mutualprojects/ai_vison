@@ -1,21 +1,6 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import fs from 'fs';
-import path from 'path';
-
-const dbDir = path.join(process.cwd(), 'data');
-const dbPath = path.join(dbDir, 'admins.json');
-
-// Helper to get local DB
-function getAdminsDb() {
-  if (!fs.existsSync(dbPath)) {
-    if (!fs.existsSync(dbDir)) {
-      fs.mkdirSync(dbDir, { recursive: true });
-    }
-    fs.writeFileSync(dbPath, JSON.stringify({ admins: [] }, null, 2));
-  }
-  return JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-}
+import { getAdminsDb, saveAdminsDb } from '@/lib/db';
 
 export async function POST(req: Request) {
   try {
@@ -34,7 +19,7 @@ export async function POST(req: Request) {
     }
 
     const slug = companyName.toLowerCase().replace(/[^a-z0-9]/g, '-');
-    const db = getAdminsDb();
+    const db = await getAdminsDb();
 
     // Check if exists, update if it does
     const existingIndex = db.admins.findIndex((a: any) => a.slug === slug);
@@ -53,7 +38,7 @@ export async function POST(req: Request) {
       });
     }
 
-    fs.writeFileSync(dbPath, JSON.stringify(db, null, 2));
+    await saveAdminsDb(db);
 
     return NextResponse.json({ 
       success: true, 

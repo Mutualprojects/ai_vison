@@ -13,6 +13,7 @@
     "@tensorflow-models/coco-ssd": "^2.2.3",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/google-libphonenumber": "^7.4.30",
+    "@vercel/kv": "^3.0.0",
     "compromise": "^14.15.0",
     "date-fns": "^4.3.0",
     "google-libphonenumber": "^3.2.44",
