@@ -103,7 +103,7 @@ export default function ClientVision({ companySlug }: { companySlug?: string }) 
   const [results, setResults] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [savingLead, setSavingLead] = useState(false);
-  const [saveSuccess, setSaveSuccess] = useState(false);
+  const [saveSuccess, setSaveSuccess] = useState<string | false>(false);
   
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -180,7 +180,12 @@ export default function ClientVision({ companySlug }: { companySlug?: string }) 
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Failed to save lead");
-      setSaveSuccess(true);
+      
+      if (data.exists) {
+        setSaveSuccess("exists");
+      } else {
+        setSaveSuccess("saved");
+      }
     } catch (err: any) {
       setError(err.message || "Failed to save lead to CRM");
     } finally {
@@ -458,23 +463,27 @@ export default function ClientVision({ companySlug }: { companySlug?: string }) 
                 <div className="p-8 rounded-3xl border border-purple-200 bg-white shadow-xl shadow-purple-900/5 transition-all">
                   <div className="flex items-center justify-between mb-8">
                     <h4 className="font-bold text-2xl text-purple-950">Lead Profile</h4>
-                    <button 
-                      onClick={handleSaveToCRM}
-                      disabled={savingLead || saveSuccess}
-                      className={`px-4 py-2 text-sm font-bold rounded-full uppercase tracking-wider transition-all shadow-md flex items-center gap-2 ${
-                        saveSuccess 
-                          ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' 
-                          : 'bg-fuchsia-600 text-white hover:bg-fuchsia-700 hover:scale-105 active:scale-95'
-                      }`}
-                    >
-                      {savingLead ? (
-                        <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>
-                      ) : saveSuccess ? (
-                        <>Saved to Sheets ✓</>
-                      ) : (
-                        <>Save to Google Sheets</>
-                      )}
-                    </button>
+                      <button 
+                        onClick={handleSaveToCRM}
+                        disabled={savingLead || !!saveSuccess}
+                        className={`px-4 py-2 text-sm font-bold rounded-full uppercase tracking-wider transition-all shadow-md flex items-center gap-2 ${
+                          saveSuccess === 'saved'
+                            ? 'bg-emerald-100 text-emerald-700 border border-emerald-200' 
+                            : saveSuccess === 'exists'
+                            ? 'bg-amber-100 text-amber-700 border border-amber-200'
+                            : 'bg-fuchsia-600 text-white hover:bg-fuchsia-700 hover:scale-105 active:scale-95'
+                        }`}
+                      >
+                        {savingLead ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>
+                        ) : saveSuccess === 'exists' ? (
+                          <>Already in database ✓</>
+                        ) : saveSuccess === 'saved' ? (
+                          <>Saved to Sheets ✓</>
+                        ) : (
+                          <>Save to Google Sheets</>
+                        )}
+                      </button>
                   </div>
                   
                   <div className="space-y-6">

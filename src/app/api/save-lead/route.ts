@@ -73,6 +73,52 @@ export async function POST(req: Request) {
     });
     const firstSheetName = sheetMetadata.data.sheets?.[0]?.properties?.title || 'Sheet1';
 
+    // DEDUPLICATION: Fetch existing leads to check if this lead already exists
+    const existingData = await sheets.spreadsheets.values.get({
+      spreadsheetId: sheetId,
+      range: `'${firstSheetName}'!A:Z`,
+    });
+
+    const rows = existingData.data.values || [];
+    let isDuplicate = false;
+
+    if (rows.length > 1) {
+      // Find which columns contain Email and Phone
+      const headers = rows[0];
+      const emailIndex = headers.findIndex((h: string) => h.toLowerCase().includes('email'));
+      const phoneIndex = headers.findIndex((h: string) => h.toLowerCase().includes('phone'));
+
+      for (let i = 1; i < rows.length; i++) {
+        const row = rows[i];
+        const rowEmail = emailIndex >= 0 ? row[emailIndex] : null;
+        const rowPhone = phoneIndex >= 0 ? row[phoneIndex] : null;
+
+        // Check if email matches
+        if (email && rowEmail && rowEmail.toLowerCase().trim() === email.toLowerCase().trim()) {
+          isDuplicate = true;
+          break;
+        }
+        
+        // If no email exists, fallback to checking if phone matches exactly
+        if (!email && phone && rowPhone) {
+           const cleanInputPhone = phone.replace(/\D/g, '');
+           const cleanRowPhone = rowPhone.replace(/\D/g, '');
+           if (cleanInputPhone.length > 5 && cleanInputPhone === cleanRowPhone) {
+             isDuplicate = true;
+             break;
+           }
+        }
+      }
+    }
+
+    if (isDuplicate) {
+      return NextResponse.json({ 
+        success: true, 
+        exists: true, 
+        message: 'This lead is already in your database. Thank you!' 
+      });
+    }
+
     // Append the lead to the Google Sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
