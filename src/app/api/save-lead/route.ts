@@ -17,14 +17,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Missing companySlug parameter. Cannot determine which Google Sheet to save to." }, { status: 400 });
     }
 
-    // Dynamic Sheet ID & OAuth Token Lookup
-    const dbPath = path.join(process.cwd(), 'data', 'admins.json');
-    if (!fs.existsSync(dbPath)) {
-      return NextResponse.json({ error: "Admin database not initialized." }, { status: 500 });
+    // SINGLE-TENANT OVERRIDE FOR VERCEL
+    // If the user set their own token and sheet ID in Vercel ENV, use that instead of the local JSON DB
+    let adminConfig = null;
+    if (process.env.ADMIN_REFRESH_TOKEN && process.env.ADMIN_SHEET_ID) {
+      adminConfig = {
+        sheetId: process.env.ADMIN_SHEET_ID,
+        refreshToken: process.env.ADMIN_REFRESH_TOKEN,
+        accessToken: ''
+      };
+    } else {
+      // Dynamic Sheet ID & OAuth Token Lookup
+      const dbPath = path.join(process.cwd(), 'data', 'admins.json');
+      if (!fs.existsSync(dbPath)) {
+        return NextResponse.json({ error: "Admin database not initialized and Vercel Environment Variables are missing." }, { status: 500 });
+      }
+      
+      const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+      adminConfig = db.admins.find((a: any) => a.slug === companySlug);
     }
-    
-    const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-    const adminConfig = db.admins.find((a: any) => a.slug === companySlug);
+
     
     if (!adminConfig || !adminConfig.sheetId) {
       return NextResponse.json({ error: `No connected Google Sheet found for company '${companySlug}'. Please ask the admin to configure it.` }, { status: 404 });

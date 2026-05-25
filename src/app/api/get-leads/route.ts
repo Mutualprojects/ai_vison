@@ -17,14 +17,24 @@ export async function GET(req: Request) {
     const browserRefreshToken = cookieStore.get('google_refresh_token')?.value;
     const browserAccessToken = cookieStore.get('google_access_token')?.value;
 
-    // Dynamic Sheet ID Lookup
-    const dbPath = path.join(process.cwd(), 'data', 'admins.json');
-    if (!fs.existsSync(dbPath)) {
-      return NextResponse.json({ error: "Admin database not initialized." }, { status: 500 });
+    // SINGLE-TENANT OVERRIDE FOR VERCEL
+    let adminConfig = null;
+    if (process.env.ADMIN_REFRESH_TOKEN && process.env.ADMIN_SHEET_ID) {
+      adminConfig = {
+        sheetId: process.env.ADMIN_SHEET_ID,
+        refreshToken: process.env.ADMIN_REFRESH_TOKEN,
+        accessToken: ''
+      };
+    } else {
+      // Dynamic Sheet ID Lookup
+      const dbPath = path.join(process.cwd(), 'data', 'admins.json');
+      if (!fs.existsSync(dbPath)) {
+        return NextResponse.json({ error: "Admin database not initialized." }, { status: 500 });
+      }
+      
+      const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
+      adminConfig = db.admins.find((a: any) => a.slug === companySlug);
     }
-    
-    const db = JSON.parse(fs.readFileSync(dbPath, 'utf8'));
-    const adminConfig = db.admins.find((a: any) => a.slug === companySlug);
     
     if (!adminConfig || !adminConfig.sheetId) {
       return NextResponse.json({ error: `No connected Google Sheet found for company '${companySlug}'.` }, { status: 404 });
