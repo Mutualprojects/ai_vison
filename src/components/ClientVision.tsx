@@ -261,13 +261,14 @@ export default function ClientVision({ companySlug }: { companySlug?: string }) 
       
       const formData = new FormData();
       formData.append("base64Image", optimizedBase64);
-      formData.append("apikey", "helloworld");
+      formData.append("apikey", process.env.NEXT_PUBLIC_OCR_API_KEY || "K86783719988957");
       
-      // DEEP OCR CONFIGURATION
-      formData.append("OCREngine", "2"); 
-      formData.append("scale", "true"); // Server-side scaling
-      formData.append("detectOrientation", "true");
-      formData.append("isTable", "true"); // Forces the engine to read scattered tiny blocks!
+      // DEEP OCR CONFIGURATION FOR BUSINESS CARDS
+      formData.append("OCREngine", "2"); // Engine 2 is best for special characters and disjointed text (business cards/receipts)
+      formData.append("scale", "true"); // Server-side scaling for tiny fonts
+      formData.append("detectOrientation", "true"); // Auto-rotates upside-down cards
+      formData.append("isTable", "true"); // Forces the engine to read scattered tiny blocks and columns independently
+      formData.append("language", "eng"); // Setting specific language drastically improves accuracy
 
       const ocrResponse = await fetch("https://api.ocr.space/parse/image", {
         method: "POST",
