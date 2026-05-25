@@ -52,7 +52,4 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
-    const db = getAdminsDb();
-    return NextResponse.json(db.admins);
-}
+
