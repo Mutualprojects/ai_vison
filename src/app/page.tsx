@@ -260,6 +260,10 @@ export default function LandingPage() {
     setMobileOpen(false);
   };
 
+  const startAuth = () => {
+    window.location.href = "/api/auth/google";
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 overflow-x-hidden" style={{ fontFamily: "'DM Sans', system-ui, sans-serif" }}>
 
@@ -326,13 +330,13 @@ export default function LandingPage() {
           {/* CTA */}
           <div className="hidden md:flex items-center gap-3">
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={startAuth}
               className="text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors px-4 py-2"
             >
               Sign In
             </button>
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={startAuth}
               className="px-5 py-2.5 rounded-full bg-fuchsia-600 text-white font-bold text-sm hover:bg-fuchsia-500 transition-all glow-fuchsia shadow-md shadow-fuchsia-200"
             >
               Get Started Free
@@ -358,7 +362,7 @@ export default function LandingPage() {
               </button>
             ))}
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={startAuth}
               className="mt-2 px-6 py-3 rounded-full bg-fuchsia-600 text-white font-bold text-sm w-full shadow-md shadow-fuchsia-200"
             >
               Get Started Free
@@ -402,7 +406,7 @@ export default function LandingPage() {
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-4 w-full justify-center mb-6">
             <button
-              onClick={() => scrollTo("pricing")}
+              onClick={startAuth}
               className="group px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold text-base hover:bg-fuchsia-500 transition-all glow-fuchsia hover:-translate-y-0.5 flex items-center justify-center gap-2 shadow-lg shadow-fuchsia-200"
             >
               Start Free — No Card Required
@@ -807,7 +811,7 @@ export default function LandingPage() {
                     ))}
                   </div>
 
-                  <button className={`w-full py-3.5 rounded-full font-bold text-sm transition-all ${highlight
+                  <button onClick={startAuth} className={`w-full py-3.5 rounded-full font-bold text-sm transition-all ${highlight
                     ? "bg-fuchsia-600 text-white hover:bg-fuchsia-500 glow-fuchsia shadow-lg shadow-fuchsia-200"
                     : "border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100"
                     }`}>
@@ -854,7 +858,7 @@ export default function LandingPage() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
-                    onClick={() => scrollTo("pricing")}
+                    onClick={startAuth}
                     className="group px-10 py-4 rounded-full bg-fuchsia-600 text-white font-bold text-base hover:bg-fuchsia-500 transition-all glow-fuchsia hover:-translate-y-0.5 flex items-center justify-center gap-2 shadow-lg shadow-fuchsia-200"
                   >
                     Start Free Trial
