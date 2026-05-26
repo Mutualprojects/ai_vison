@@ -1,19 +1,19 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { ArrowRight, ScanLine, Database, Zap, ShieldCheck, ChevronRight, BarChart3, Users } from "lucide-react";
 import Link from "next/link";
 
-const fadeIn = {
+const fadeIn: Variants = {
   hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: "easeOut" } 
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.8, ease: "easeOut" }
   }
 };
 
-const staggerContainer = {
+const staggerContainer: Variants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
@@ -26,7 +26,7 @@ const staggerContainer = {
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-50 font-sans selection:bg-fuchsia-500/30 overflow-hidden">
-      
+
       {/* BACKGROUND ELEMENTS */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-fuchsia-600/20 blur-[120px] rounded-full mix-blend-screen" />
@@ -41,8 +41,8 @@ export default function LandingPage() {
             <ScanLine className="w-6 h-6 text-fuchsia-500" />
             <span>LeadScanner <span className="text-fuchsia-400">Pro</span></span>
           </div>
-          <Link 
-            href="/admin" 
+          <Link
+            href="/admin"
             className="px-6 py-2.5 rounded-full bg-white text-slate-950 font-bold text-sm hover:bg-fuchsia-50 transition-colors shadow-lg shadow-white/5"
           >
             Admin Login
@@ -54,7 +54,7 @@ export default function LandingPage() {
       <main className="relative z-10 pt-32 pb-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
@@ -63,8 +63,8 @@ export default function LandingPage() {
               <Zap className="w-4 h-4" />
               The Future of Event Networking
             </motion.div>
-            
-            <motion.h1 
+
+            <motion.h1
               initial="hidden"
               animate="visible"
               variants={fadeIn}
@@ -72,25 +72,25 @@ export default function LandingPage() {
             >
               NO More <br /> Manual Entry.
             </motion.h1>
-            
-            <motion.p 
+
+            <motion.p
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               className="text-xl md:text-2xl text-slate-400 mb-12 max-w-2xl leading-relaxed"
             >
-              Transform physical business cards into highly organized CRM data instantly. 
+              Transform physical business cards into highly organized CRM data instantly.
               Powered by Edge AI and Deep Cloud OCR.
             </motion.p>
-            
-            <motion.div 
+
+            <motion.div
               initial="hidden"
               animate="visible"
               variants={fadeIn}
               className="flex flex-col sm:flex-row gap-4 w-full justify-center"
             >
-              <Link 
-                href="/admin" 
+              <Link
+                href="/admin"
                 className="px-8 py-4 rounded-full bg-fuchsia-600 text-white font-bold text-lg hover:bg-fuchsia-500 transition-all shadow-[0_0_40px_-10px_rgba(217,70,239,0.5)] hover:shadow-[0_0_60px_-10px_rgba(217,70,239,0.7)] hover:-translate-y-1 flex items-center justify-center gap-2"
               >
                 Launch Scanner <ArrowRight className="w-5 h-5" />
@@ -99,7 +99,7 @@ export default function LandingPage() {
           </div>
 
           {/* FEATURES GRID */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
@@ -141,7 +141,7 @@ export default function LandingPage() {
           </motion.div>
 
           {/* DASHBOARD PREVIEW SECTION */}
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
