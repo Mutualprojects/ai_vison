@@ -16,6 +16,7 @@
     "@vercel/kv": "^3.0.0",
     "compromise": "^14.15.0",
     "date-fns": "^4.3.0",
+    "framer-motion": "^12.40.0",
     "google-libphonenumber": "^3.2.44",
     "googleapis": "^172.0.0",
     "lucide-react": "^1.16.0",
