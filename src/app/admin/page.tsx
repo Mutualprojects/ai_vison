@@ -76,38 +76,38 @@ export default function AdminPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center p-6 text-purple-950 font-sans">
+    <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6 text-[#1b4965] font-sans">
       <div className="max-w-xl w-full">
         
         <div className="flex items-center justify-center gap-3 mb-8">
-          <div className="w-12 h-12 bg-gradient-to-tr from-purple-600 to-fuchsia-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/20">
+          <div className="w-12 h-12 bg-gradient-to-tr from-[#1b4965] to-[#5fa8d3] rounded-2xl flex items-center justify-center shadow-lg shadow-[#1b4965]/20">
             <Zap className="w-6 h-6 text-white" />
           </div>
-          <h1 className="text-3xl font-bold tracking-tight">LeadScanner Admin</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-[#1b4965]">LeadScanner Admin</h1>
         </div>
 
-        <div className="bg-white rounded-3xl border border-purple-100 shadow-2xl shadow-purple-900/5 p-8 overflow-hidden relative">
-          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-fuchsia-500" />
+        <div className="bg-white rounded-3xl border border-[#bee9e8] shadow-2xl shadow-[#cae9ff]/50 p-8 overflow-hidden relative">
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#5fa8d3] to-[#62b6cb]" />
           
           <h2 className="text-xl font-bold mb-2">Create your Public Scanner</h2>
-          <p className="text-purple-600/70 text-sm mb-8">
+          <p className="text-[#1b4965]/70 text-sm mb-8">
             Connect your Google Account so your public scanner can write leads directly to your personal Google Sheets. No manual sharing required!
           </p>
 
           <div className="mb-8">
             {isAuthenticated === null ? (
-              <div className="w-full h-12 flex items-center justify-center text-purple-400">
+              <div className="w-full h-12 flex items-center justify-center text-[#62b6cb]">
                 <Loader2 className="w-5 h-5 animate-spin" />
               </div>
             ) : isAuthenticated ? (
-              <div className="w-full h-12 bg-emerald-50 border-2 border-emerald-200 text-emerald-700 rounded-xl font-bold shadow-sm flex items-center justify-center gap-3">
-                <CheckCircle className="w-5 h-5" />
+              <div className="w-full h-12 bg-[#bee9e8]/30 border-2 border-[#62b6cb]/50 text-[#1b4965] rounded-xl font-bold shadow-sm flex items-center justify-center gap-3">
+                <CheckCircle className="w-5 h-5 text-[#62b6cb]" />
                 Step 1: Google Account Connected
               </div>
             ) : (
               <a 
                 href="/api/auth/google" 
-                className="w-full h-12 bg-white border-2 border-purple-200 text-purple-700 hover:bg-purple-50 rounded-xl font-bold shadow-sm flex items-center justify-center gap-3 transition-all"
+                className="w-full h-12 bg-white border-2 border-[#bee9e8] text-[#1b4965] hover:bg-[#cae9ff]/30 rounded-xl font-bold shadow-sm flex items-center justify-center gap-3 transition-all"
               >
                 <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5" />
                 Step 1: Connect Google Account
@@ -118,7 +118,7 @@ export default function AdminPage() {
           <form onSubmit={handleRegister} className="space-y-5">
             <div>
               <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
-                <Building2 className="w-4 h-4 text-purple-500" /> Step 2: Company or Project Name
+                <Building2 className="w-4 h-4 text-[#5fa8d3]" /> Step 2: Company or Project Name
               </label>
               <input
                 type="text"
@@ -126,13 +126,13 @@ export default function AdminPage() {
                 value={companyName}
                 onChange={e => setCompanyName(e.target.value)}
                 placeholder="e.g. Acme Corp"
-                className="w-full h-12 px-4 rounded-xl border border-purple-200 bg-purple-50/50 focus:bg-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-purple-950 font-medium"
+                className="w-full h-12 px-4 rounded-xl border border-[#bee9e8] bg-[#cae9ff]/20 focus:bg-white focus:ring-2 focus:ring-[#62b6cb] focus:border-transparent outline-none transition-all text-[#1b4965] font-medium"
               />
             </div>
 
             <div>
               <label className="block text-sm font-semibold mb-2 flex items-center gap-2">
-                <FileSpreadsheet className="w-4 h-4 text-emerald-500" /> Step 3: Target Google Sheet ID
+                <FileSpreadsheet className="w-4 h-4 text-[#5fa8d3]" /> Step 3: Target Google Sheet ID
               </label>
               <input
                 type="text"
@@ -140,20 +140,20 @@ export default function AdminPage() {
                 value={sheetId}
                 onChange={e => setSheetId(e.target.value)}
                 placeholder="e.g. 1BxiMVs0XRYFgwnTE..."
-                className="w-full h-12 px-4 rounded-xl border border-purple-200 bg-purple-50/50 focus:bg-white focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none transition-all text-purple-950 font-mono text-sm"
+                className="w-full h-12 px-4 rounded-xl border border-[#bee9e8] bg-[#cae9ff]/20 focus:bg-white focus:ring-2 focus:ring-[#62b6cb] focus:border-transparent outline-none transition-all text-[#1b4965] font-mono text-sm"
               />
 
               <div className="flex items-center gap-4 mt-3">
-                <div className="h-px bg-purple-100 flex-1" />
-                <span className="text-xs font-bold text-purple-400 uppercase tracking-wider">OR</span>
-                <div className="h-px bg-purple-100 flex-1" />
+                <div className="h-px bg-[#bee9e8] flex-1" />
+                <span className="text-xs font-bold text-[#62b6cb] uppercase tracking-wider">OR</span>
+                <div className="h-px bg-[#bee9e8] flex-1" />
               </div>
 
               <button
                 type="button"
                 onClick={handleAutoCreateSheet}
                 disabled={isAutoCreating || !isAuthenticated || !companyName}
-                className="mt-3 w-full h-10 bg-purple-50 hover:bg-purple-100 text-purple-700 border border-purple-200 rounded-xl font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                className="mt-3 w-full h-10 bg-[#cae9ff]/30 hover:bg-[#bee9e8] text-[#1b4965] border border-[#bee9e8] rounded-xl font-bold text-sm shadow-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {isAutoCreating ? <Loader2 className="w-4 h-4 animate-spin" /> : '✨ Auto-Create a new Google Sheet'}
               </button>
@@ -168,7 +168,7 @@ export default function AdminPage() {
             <button
               type="submit"
               disabled={loading || !isAuthenticated}
-              className="w-full h-12 bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full h-12 bg-gradient-to-r from-[#1b4965] to-[#5fa8d3] text-white rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {!isAuthenticated ? (
                 <><Lock className="w-4 h-4" /> Connect Google to Unlock</>
@@ -181,21 +181,21 @@ export default function AdminPage() {
           </form>
 
           {result && (
-            <div className="mt-8 p-6 bg-purple-50 border border-purple-200 rounded-2xl animate-in fade-in slide-in-from-bottom-4">
-              <div className="flex items-center gap-2 mb-3 text-emerald-600 font-bold">
+            <div className="mt-8 p-6 bg-[#cae9ff]/20 border border-[#bee9e8] rounded-2xl animate-in fade-in slide-in-from-bottom-4">
+              <div className="flex items-center gap-2 mb-3 text-[#5fa8d3] font-bold">
                 <CheckCircle className="w-5 h-5" /> Successfully Configured!
               </div>
-              <p className="text-sm text-purple-700 mb-2 font-medium">Your public scanner is live at:</p>
+              <p className="text-sm text-[#1b4965]/80 mb-2 font-medium">Your public scanner is live at:</p>
               
               <div className="flex items-center gap-2">
-                <div className="flex-1 h-12 bg-white border border-purple-200 rounded-xl flex items-center px-4 font-mono text-sm text-purple-900 truncate">
+                <div className="flex-1 h-12 bg-white border border-[#bee9e8] rounded-xl flex items-center px-4 font-mono text-sm text-[#1b4965] truncate">
                   {typeof window !== 'undefined' ? window.location.origin : ''}{result.publicUrl}
                 </div>
                 <button 
                   onClick={handleCopy}
-                  className="h-12 w-12 bg-white border border-purple-200 rounded-xl flex items-center justify-center hover:bg-purple-100 transition-colors text-purple-600 shadow-sm"
+                  className="h-12 w-12 bg-white border border-[#bee9e8] rounded-xl flex items-center justify-center hover:bg-[#bee9e8]/50 transition-colors text-[#1b4965] shadow-sm"
                 >
-                  {copied ? <CheckCircle className="w-5 h-5 text-emerald-500" /> : <Copy className="w-5 h-5" />}
+                  {copied ? <CheckCircle className="w-5 h-5 text-[#5fa8d3]" /> : <Copy className="w-5 h-5" />}
                 </button>
               </div>
               
@@ -203,7 +203,7 @@ export default function AdminPage() {
                 href={result.publicUrl} 
                 target="_blank"
                 rel="noreferrer"
-                className="mt-4 block text-center text-sm font-bold text-purple-600 hover:text-fuchsia-600 underline underline-offset-4"
+                className="mt-4 block text-center text-sm font-bold text-[#1b4965] hover:text-[#5fa8d3] underline underline-offset-4"
               >
                 Open Public Scanner
               </a>
