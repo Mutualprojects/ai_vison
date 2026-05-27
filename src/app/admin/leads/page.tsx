@@ -1037,6 +1037,7 @@ export default function AdminLeadsPage() {
                       <th style={{ padding: "13px 20px", textAlign: "left", fontSize: 9, fontWeight: 800, color: textMut, letterSpacing: "0.13em", textTransform: "uppercase", borderBottom: border }}>Company</th>
                       <th style={{ padding: "13px 20px", textAlign: "left", fontSize: 9, fontWeight: 800, color: textMut, letterSpacing: "0.13em", textTransform: "uppercase", borderBottom: border }}>Email</th>
                       <th style={{ padding: "13px 20px", textAlign: "left", fontSize: 9, fontWeight: 800, color: textMut, letterSpacing: "0.13em", textTransform: "uppercase", borderBottom: border }}>Phone</th>
+                      <th style={{ padding: "13px 20px", textAlign: "left", fontSize: 9, fontWeight: 800, color: textMut, letterSpacing: "0.13em", textTransform: "uppercase", borderBottom: border }}>Website</th>
                       <th style={{ padding: "13px 20px", textAlign: "right", fontSize: 9, fontWeight: 800, color: textMut, letterSpacing: "0.13em", textTransform: "uppercase", borderBottom: border }}>Action</th>
                     </tr>
                   </thead>
@@ -1069,6 +1070,13 @@ export default function AdminLeadsPage() {
                           </a>
                         </td>
                         <td style={{ padding: "13px 20px", color: textMut, fontSize: 13, fontFamily: "'JetBrains Mono',monospace" }}>{getField(lead, "Phone", "phone") || "—"}</td>
+                        <td style={{ padding: "13px 20px", color: PALETTE.sky, fontSize: 13 }}>
+                          {getField(lead, "Website", "website") ? (
+                            <a href={getField(lead, "Website", "website").startsWith('http') ? getField(lead, "Website", "website") : `https://${getField(lead, "Website", "website")}`} target="_blank" rel="noreferrer" style={{ color: PALETTE.sky, textDecoration: "none", fontWeight: 600 }}>
+                              {getField(lead, "Website", "website")}
+                            </a>
+                          ) : <span style={{ color: textMut }}>—</span>}
+                        </td>
                         <td style={{ padding: "13px 20px", textAlign: "right" }}>
                           <a href={`mailto:${getField(lead, "Email", "email")}`} style={{
                             display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 13px",
