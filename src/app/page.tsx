@@ -92,56 +92,56 @@ const FEATURES = [
   {
     icon: <ScanLine className="w-6 h-6" />,
     color: "blue1",
-    title: "Edge AI Card Detection",
-    desc: "A lightweight TensorFlow Lite model runs entirely on-device to isolate cards from backgrounds in real time — no server round-trip needed for detection."
-  },
-  {
-    icon: <Layers className="w-6 h-6" />,
-    color: "blue2",
-    title: "Multi-Language OCR",
-    desc: "Extract text accurately from cards printed in English, Spanish, French, German, Japanese, Chinese, Arabic, and 40+ other languages out of the box."
+    title: "Zero-Touch AI OCR Pipeline",
+    desc: "Powered by Google Cloud Vision API and TensorFlow.js, it accurately parses messy, unstructured text from photos into strictly structured JSON objects."
   },
   {
     icon: <Database className="w-6 h-6" />,
+    color: "blue2",
+    title: "Serverless Multi-Tenant Architecture",
+    desc: "Utilizes Upstash Redis (KV) to persist administrative sessions and mappings, securely routing cards to thousands of private Google Sheets."
+  },
+  {
+    icon: <BarChart3 className="w-6 h-6" />,
     color: "blue3",
-    title: "Zero-Friction CRM Sync",
-    desc: "Leads populate your master Google Sheet or Salesforce/HubSpot instance in real time. No CSV imports, no manual copy-paste — ever."
+    title: "Live-Sync Analytics Dashboard",
+    desc: "An ultra-premium analytical dashboard built with Recharts featuring real-time velocity tracking, conversion funnels, and Kanban boards."
   },
   {
     icon: <ShieldCheck className="w-6 h-6" />,
     color: "blue4",
-    title: "Smart Deduplication",
-    desc: "Fuzzy-match algorithms catch duplicates even when a contact changes company or phone. Protect your CRM hygiene across every event."
-  },
-  {
-    icon: <Repeat2 className="w-6 h-6" />,
-    color: "blue5",
-    title: "Offline-First Architecture",
-    desc: "Network dropped at the conference? Cards queue locally and sync the moment connectivity returns. No lead is ever lost."
-  },
-  {
-    icon: <BarChart3 className="w-6 h-6" />,
-    color: "blue1",
-    title: "Real-Time Admin Dashboard",
-    desc: "Live heatmaps, per-rep capture velocity, top sources, and one-click CSV exports. Understand your pipeline while the event is still happening."
+    title: "Automated Data Integrity",
+    desc: "The backend autonomously detects blank Google Sheets and securely injects strict header structures before mapping and appending incoming data."
   },
   {
     icon: <Lock className="w-6 h-6" />,
-    color: "blue2",
-    title: "SOC 2 & GDPR Ready",
-    desc: "AES-256 encryption in transit and at rest. Role-based access controls, audit logs, data-residency options, and a one-click data-deletion API."
+    color: "blue5",
+    title: "OAuth 2.0 Security",
+    desc: "Robust integration with Google OAuth ensures access tokens are handled securely with HTTP-only cookies and dynamic redirect URIs."
+  },
+  {
+    icon: <Cpu className="w-6 h-6" />,
+    color: "blue1",
+    title: "Unstructured Data Normalization",
+    desc: "Multi-stage parsing algorithms using regex and NLP heuristics strictly classify tokens like @ symbols for emails and digit clusters for phones."
   },
   {
     icon: <Globe className="w-6 h-6" />,
-    color: "blue3",
-    title: "Works on Any Device",
-    desc: "Progressive web app — no App Store install required. Open a URL on iPhone, Android, or tablet and get the full scanning experience instantly."
+    color: "blue2",
+    title: "Ephemeral Serverless Support",
+    desc: "Abstracted file-system logic dynamically routes to /tmp/data for local testing and utilizes Redis KV for persistent storage in production."
   },
   {
-    icon: <MailCheck className="w-6 h-6" />,
+    icon: <Layers className="w-6 h-6" />,
+    color: "blue3",
+    title: "Dynamic Theming & Micro-Interactions",
+    desc: "Bespoke CSS variable architecture drives seamless Light/Dark mode transitions, paired with custom fade and glow animations for haptic feedback."
+  },
+  {
+    icon: <CheckCircle2 className="w-6 h-6" />,
     color: "blue4",
-    title: "Instant Follow-Up Emails",
-    desc: "Trigger a personalized thank-you email the moment a card is scanned. Connect to SendGrid or Mailchimp to warm leads while the conversation is still fresh."
+    title: "Enterprise-Modern Typography",
+    desc: "Utilizes Google's DM Sans for pristine legibility on analytical metrics and Syne for striking, conversion-optimized headers."
   }
 ];
 
@@ -393,10 +393,10 @@ export default function LandingPage() {
 
           {/* Sub */}
           <p className="text-lg md:text-xl text-[#1b4965]/80 max-w-2xl leading-relaxed mb-4">
-            LeadScanner Pro turns physical business cards into structured CRM data in under 3 seconds — using on-device AI and cloud OCR with 99.2% field-level accuracy.
+            An enterprise-grade SaaS platform designed to bridge the gap between physical networking and digital CRM workflows. Instantly scan business cards, extract precise contact data, and autonomously sync it directly into a live, multi-tenant Google Sheets database.
           </p>
           <p className="text-sm text-[#1b4965]/60 mb-12 max-w-xl">
-            No app install required. Works on any smartphone. Syncs live to Google Sheets, Salesforce, and HubSpot.
+            Eliminate manual data entry. Enable your sales team to focus on closing deals rather than typing out contact information.
           </p>
 
           {/* CTAs */}
