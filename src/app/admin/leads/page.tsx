@@ -8,7 +8,7 @@ import {
   TrendingUp, TrendingDown, Activity, ChevronRight, Search,
   Star, Globe, ArrowUpRight, RefreshCw, X, ChevronLeft,
   ChevronDown, Inbox, BarChart2, PieChart as PieIcon, Layers,
-  Eye, EyeOff, MoreHorizontal, Tag, UserCheck, Sparkles,
+  Eye, EyeOff, MoreHorizontal, Tag, UserCheck, Sparkles, Sun, Moon,
 } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
@@ -23,19 +23,19 @@ type DateFilter = "all" | "today" | "week" | "month";
 
 /* ─────────────────────────────── CONSTANTS ─────────────────────────────── */
 const PALETTE = {
-  navy: "#0a1628",
-  navyMid: "#0f2040",
-  ink: "#162035",
-  steel: "#1e3a5f",
-  ocean: "#1b4965",
-  sky: "#5fa8d3",
-  ice: "#62b6cb",
-  mist: "#cae9ff",
-  foam: "#bee9e8",
-  gold: "#f0a500",
-  emerald: "#10b981",
-  coral: "#f97316",
-  violet: "#8b5cf6",
+  navy: 'var(--navy)',
+  navyMid: 'var(--navyMid)',
+  ink: 'var(--ink)',
+  steel: 'var(--steel)',
+  ocean: 'var(--ocean)',
+  sky: 'var(--sky)',
+  ice: 'var(--ice)',
+  mist: 'var(--mist)',
+  foam: 'var(--foam)',
+  gold: 'var(--gold)',
+  emerald: 'var(--emerald)',
+  coral: 'var(--coral)',
+  violet: 'var(--violet)',
 };
 
 const CHART_COLORS = [PALETTE.sky, PALETTE.ice, PALETTE.gold, PALETTE.violet, PALETTE.coral, PALETTE.emerald];
@@ -43,7 +43,51 @@ const KANBAN_COLS = ["New", "Contacted", "Qualified", "Proposal", "Closed"];
 
 /* ─────────────────────────────── GLOBAL CSS ────────────────────────────── */
 const CSS = `
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --navy: #f8fafc;
+  --navyMid: #ffffff;
+  --ink: #ffffff;
+  --steel: #cbd5e1;
+  --ocean: #0f172a;
+  --sky: #0284c7;
+  --ice: #0369a1;
+  --mist: #bae6fd;
+  --foam: #e0f2fe;
+  --gold: #d97706;
+  --emerald: #059669;
+  --coral: #ea580c;
+  --violet: #7c3aed;
+  
+  --textPri: #0f172a;
+  --textMut: #64748b;
+  --textSub: #94a3b8;
+  --border: rgba(0,0,0,0.1);
+  --surface: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+}
+[data-theme='dark'] {
+  --navy: #0a1628;
+  --navyMid: #0f2040;
+  --ink: #162035;
+  --steel: #1e3a5f;
+  --ocean: #1b4965;
+  --sky: #5fa8d3;
+  --ice: #62b6cb;
+  --mist: #cae9ff;
+  --foam: #bee9e8;
+  --gold: #f0a500;
+  --emerald: #10b981;
+  --coral: #f97316;
+  --violet: #8b5cf6;
+  
+  --textPri: #f1f5f9;
+  --textMut: #94a3b8;
+  --textSub: #64748b;
+  --border: rgba(255,255,255,0.07);
+  --surface: linear-gradient(135deg, #0f2040 0%, #162035 100%);
+}
+
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
@@ -63,7 +107,7 @@ const CSS = `
 .card-hover{transition:transform 0.28s cubic-bezier(.16,1,.3,1),box-shadow 0.28s cubic-bezier(.16,1,.3,1),border-color 0.22s}
 .card-hover:hover{transform:translateY(-4px);border-color:rgba(95,168,211,0.4)!important}
 .row-hover{transition:background 0.12s}
-.row-hover:hover{background:rgba(95,168,211,0.06)!important}
+.row-hover:hover{background:var(--sky)!important;opacity:0.9}
 .btn-press{transition:transform 0.1s,opacity 0.14s;cursor:pointer}
 .btn-press:hover{opacity:.82}
 .btn-press:active{transform:scale(.96)}
@@ -112,7 +156,7 @@ function ChartTip({ active, payload, label }: any) {
       borderRadius: 12, padding: "10px 14px", fontSize: 12,
       boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
     }}>
-      <p style={{ color: "#94a3b8", marginBottom: 6, fontWeight: 600 }}>{label}</p>
+      <p style={{ color: textMut, marginBottom: 6, fontWeight: 600 }}>{label}</p>
       {payload.map((p: any, i: number) => (
         <p key={i} style={{ color: p.color || PALETTE.sky, fontWeight: 700 }}>
           {p.name}: {p.value}
@@ -142,7 +186,7 @@ function KpiCard({ title, value, sub, icon, accent, trend, delay = 0 }: {
         borderRadius: "50%", background: `${accent}14`, filter: "blur(22px)", pointerEvents: "none",
       }} />
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 16 }}>
-        <p style={{ fontSize: 10, fontWeight: 700, color: "#475569", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+        <p style={{ fontSize: 10, fontWeight: 700, color: textMut, letterSpacing: "0.12em", textTransform: "uppercase" }}>
           {title}
         </p>
         <div style={{
@@ -155,7 +199,7 @@ function KpiCard({ title, value, sub, icon, accent, trend, delay = 0 }: {
       </div>
       <div style={{
         fontFamily: "'Syne', sans-serif", fontSize: 40, fontWeight: 900, lineHeight: 1,
-        color: "#f1f5f9", letterSpacing: "-2px", marginBottom: 14,
+        color: textPri, letterSpacing: "-2px", marginBottom: 14,
         animation: `countUp 0.5s ease ${delay + 200}ms both`,
       }}>
         {typeof value === "number" ? <Counter value={value} /> : value}
@@ -164,7 +208,7 @@ function KpiCard({ title, value, sub, icon, accent, trend, delay = 0 }: {
         display: "flex", alignItems: "center", justifyContent: "space-between",
         borderTop: "1px solid rgba(255,255,255,0.05)", paddingTop: 10,
       }}>
-        <span style={{ fontSize: 11, color: "#475569", fontWeight: 500 }}>{sub}</span>
+        <span style={{ fontSize: 11, color: textMut, fontWeight: 500 }}>{sub}</span>
         {trend !== undefined && (
           <span style={{
             fontSize: 11, fontWeight: 700, color: up ? PALETTE.emerald : PALETTE.coral,
@@ -193,7 +237,7 @@ function Loading() {
           }} />
           <ScanLine size={24} style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", color: PALETTE.sky }} />
         </div>
-        <p style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 800, color: "#f1f5f9" }}>
+        <p style={{ fontFamily: "'Syne',sans-serif", fontSize: 20, fontWeight: 800, color: textPri }}>
           Loading CRM…
         </p>
         <div style={{ display: "flex", gap: 6 }}>
@@ -218,6 +262,11 @@ export default function AdminLeadsPage() {
   const [slug, setSlug] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>("dashboard");
+  const [theme, setTheme] = useState("light");
+  
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
   const [dateFilter, setDateFilter] = useState<DateFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -395,15 +444,15 @@ export default function AdminLeadsPage() {
           }}>
             <ShieldCheck size={32} style={{ color: "#ef4444" }} />
           </div>
-          <h1 style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 800, color: "#f1f5f9", marginBottom: 10 }}>
+          <h1 style={{ fontFamily: "'Syne',sans-serif", fontSize: 24, fontWeight: 800, color: textPri, marginBottom: 10 }}>
             Authentication Required
           </h1>
-          <p style={{ color: "#475569", fontSize: 14, lineHeight: 1.7, marginBottom: 28 }}>
+          <p style={{ color: textMut, fontSize: 14, lineHeight: 1.7, marginBottom: 28 }}>
             Sign in with Google to access your leads dashboard.
           </p>
           <button className="btn-press" onClick={() => window.location.href = "/api/auth/google"} style={{
             padding: "12px 32px", background: PALETTE.sky, color: "#fff", border: "none",
-            borderRadius: 12, fontWeight: 700, fontSize: 14, fontFamily: "'Space Grotesk',sans-serif",
+            borderRadius: 12, fontWeight: 700, fontSize: 14, fontFamily: "'DM Sans',sans-serif",
           }}>
             Sign in with Google
           </button>
@@ -423,10 +472,10 @@ export default function AdminLeadsPage() {
           <div style={{ width: 64, height: 64, borderRadius: "50%", background: "rgba(239,68,68,0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px" }}>
             <Zap size={28} style={{ color: "#ef4444" }} />
           </div>
-          <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: 22, fontWeight: 800, color: "#f1f5f9", marginBottom: 10 }}>
+          <h2 style={{ fontFamily: "'Syne',sans-serif", fontSize: 22, fontWeight: 800, color: textPri, marginBottom: 10 }}>
             Dashboard Unavailable
           </h2>
-          <p style={{ color: "#475569", fontSize: 13, lineHeight: 1.7, marginBottom: 24 }}>{error}</p>
+          <p style={{ color: textMut, fontSize: 13, lineHeight: 1.7, marginBottom: 24 }}>{error}</p>
           <a href="/admin" style={{
             display: "inline-block", padding: "11px 28px", background: PALETTE.sky,
             color: "#fff", borderRadius: 12, fontWeight: 700, fontSize: 14, textDecoration: "none",
@@ -439,17 +488,17 @@ export default function AdminLeadsPage() {
   );
 
   // ─────────────────── TOKEN SHORTCUTS ────────────────────────────────────
-  const border = "1px solid rgba(255,255,255,0.07)";
-  const surface = `linear-gradient(135deg, ${PALETTE.navyMid} 0%, ${PALETTE.ink} 100%)`;
-  const textPri = "#f1f5f9";
-  const textMut = "#475569";
-  const textSub = "#64748b";
+  const border = "1px solid var(--border)";
+  const surface = "var(--surface)";
+  const textPri = "var(--textPri)";
+  const textMut = "var(--textMut)";
+  const textSub = "var(--textSub)";
 
   // ─────────────────── RENDER ─────────────────────────────────────────────
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <div style={{ minHeight: "100vh", background: PALETTE.navy, fontFamily: "'Space Grotesk',sans-serif", color: textPri, position: "relative", overflowX: "hidden" }}>
+      <div style={{ minHeight: "100vh", background: PALETTE.navy, fontFamily: "'DM Sans',sans-serif", color: textPri, position: "relative", overflowX: "hidden" }}>
 
         {/* Ambient decorative blobs */}
         <div style={{ position: "fixed", top: "5%", right: "4%", width: 380, height: 380, borderRadius: "50%", background: "radial-gradient(circle,rgba(95,168,211,0.06) 0%,transparent 70%)", pointerEvents: "none", animation: "float 16s ease-in-out infinite" }} />
@@ -500,7 +549,7 @@ export default function AdminLeadsPage() {
                   width: "100%", padding: "9px 36px 9px 34px",
                   background: "rgba(255,255,255,0.04)", border,
                   borderRadius: 12, fontSize: 13, color: textPri,
-                  outline: "none", fontFamily: "'Space Grotesk',sans-serif",
+                  outline: "none", fontFamily: "'DM Sans',sans-serif",
                   transition: "border-color .2s,box-shadow .2s",
                 }}
                 onFocus={e => { e.target.style.borderColor = `${PALETTE.sky}55`; e.target.style.boxShadow = `0 0 0 3px ${PALETTE.sky}18`; }}
@@ -520,6 +569,12 @@ export default function AdminLeadsPage() {
                 display: "flex", alignItems: "center", justifyContent: "center",
               }}>
                 <RefreshCw size={14} />
+              </button>
+              <button className="btn-press" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} title="Toggle Theme" style={{
+                width: 38, height: 38, borderRadius: 10, background: "transparent", border, color: textMut,
+                display: "flex", alignItems: "center", justifyContent: "center",
+              }}>
+                {theme === 'light' ? <Moon size={14} /> : <Sun size={14} />}
               </button>
               {slug && (
                 <a href={`/scan/${slug}`} target="_blank" rel="noreferrer" style={{
@@ -628,8 +683,8 @@ export default function AdminLeadsPage() {
                             </linearGradient>
                           </defs>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.04)" />
-                          <XAxis dataKey="date" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} tickLine={false} />
-                          <YAxis allowDecimals={false} tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} tickLine={false} />
+                          <XAxis dataKey="date" tick={{ fill: textMut, fontSize: 10 }} axisLine={false} tickLine={false} />
+                          <YAxis allowDecimals={false} tick={{ fill: textMut, fontSize: 10 }} axisLine={false} tickLine={false} />
                           <Tooltip content={<ChartTip />} />
                           <Area dataKey="cumulative" name="Total" stroke={PALETTE.sky} fill="url(#areaGrad)" strokeWidth={2} dot={false} />
                           <Area dataKey="leads" name="Daily" stroke={PALETTE.ice} fill="none" strokeWidth={1.5} strokeDasharray="4 3" dot={false} />
@@ -665,7 +720,7 @@ export default function AdminLeadsPage() {
                       <div key={i} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 12 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
                           <div style={{ width: 9, height: 9, borderRadius: "50%", background: CHART_COLORS[i % CHART_COLORS.length], flexShrink: 0 }} />
-                          <span style={{ color: "#94a3b8", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 130 }}>{d.name}</span>
+                          <span style={{ color: textMut, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 130 }}>{d.name}</span>
                         </div>
                         <span style={{ fontWeight: 700, color: textPri }}>{d.value}</span>
                       </div>
@@ -686,8 +741,8 @@ export default function AdminLeadsPage() {
                       <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={analytics.chartData} barSize={18}>
                           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="rgba(255,255,255,0.04)" />
-                          <XAxis dataKey="date" tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} tickLine={false} />
-                          <YAxis allowDecimals={false} tick={{ fill: "#475569", fontSize: 10 }} axisLine={false} tickLine={false} />
+                          <XAxis dataKey="date" tick={{ fill: textMut, fontSize: 10 }} axisLine={false} tickLine={false} />
+                          <YAxis allowDecimals={false} tick={{ fill: textMut, fontSize: 10 }} axisLine={false} tickLine={false} />
                           <Tooltip content={<ChartTip />} />
                           <Bar dataKey="leads" name="Leads" radius={[5, 5, 0, 0]}>
                             {analytics.chartData.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
@@ -709,7 +764,7 @@ export default function AdminLeadsPage() {
                     <ResponsiveContainer width="100%" height="100%">
                       <RadarChart data={analytics.weekData}>
                         <PolarGrid stroke="rgba(255,255,255,0.06)" />
-                        <PolarAngleAxis dataKey="day" tick={{ fill: "#475569", fontSize: 10 }} />
+                        <PolarAngleAxis dataKey="day" tick={{ fill: textMut, fontSize: 10 }} />
                         <PolarRadiusAxis tick={false} axisLine={false} />
                         <Radar dataKey="count" name="Leads" stroke={PALETTE.emerald} fill={PALETTE.emerald} fillOpacity={0.18} strokeWidth={1.5} />
                         <Tooltip content={<ChartTip />} />
@@ -731,7 +786,7 @@ export default function AdminLeadsPage() {
                       return (
                         <div key={f.stage}>
                           <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, marginBottom: 5 }}>
-                            <span style={{ color: "#94a3b8", fontWeight: 600 }}>{f.stage}</span>
+                            <span style={{ color: textMut, fontWeight: 600 }}>{f.stage}</span>
                             <span style={{ color: clr, fontWeight: 700 }}>{f.count}</span>
                           </div>
                           <div style={{ height: 7, background: "rgba(255,255,255,0.05)", borderRadius: 6, overflow: "hidden" }}>
@@ -838,7 +893,7 @@ export default function AdminLeadsPage() {
                             borderRadius: 8, padding: "5px 10px", fontSize: 11,
                           }}>
                             <p style={{ fontSize: 9, fontWeight: 700, color: textMut, textTransform: "uppercase", letterSpacing: "0.08em" }}>{k}</p>
-                            <p style={{ fontWeight: 600, color: "#94a3b8" }}>{lead[k]}</p>
+                            <p style={{ fontWeight: 600, color: textMut }}>{lead[k]}</p>
                           </div>
                         ))}
                       </div>
@@ -1000,13 +1055,13 @@ export default function AdminLeadsPage() {
                             </div>
                           </div>
                         </td>
-                        <td style={{ padding: "13px 20px", color: "#94a3b8", fontSize: 13 }}>{getField(lead, "Company", "company") || "—"}</td>
+                        <td style={{ padding: "13px 20px", color: textMut, fontSize: 13 }}>{getField(lead, "Company", "company") || "—"}</td>
                         <td style={{ padding: "13px 20px" }}>
                           <a href={`mailto:${getField(lead, "Email", "email")}`} style={{ color: PALETTE.sky, textDecoration: "none", fontSize: 13, fontWeight: 600 }}>
                             {getField(lead, "Email", "email") || "—"}
                           </a>
                         </td>
-                        <td style={{ padding: "13px 20px", color: "#94a3b8", fontSize: 13, fontFamily: "'JetBrains Mono',monospace" }}>{getField(lead, "Phone", "phone") || "—"}</td>
+                        <td style={{ padding: "13px 20px", color: textMut, fontSize: 13, fontFamily: "'JetBrains Mono',monospace" }}>{getField(lead, "Phone", "phone") || "—"}</td>
                         <td style={{ padding: "13px 20px", textAlign: "right" }}>
                           <a href={`mailto:${getField(lead, "Email", "email")}`} style={{
                             display: "inline-flex", alignItems: "center", gap: 5, padding: "6px 13px",
@@ -1036,7 +1091,7 @@ export default function AdminLeadsPage() {
                   padding: "13px 22px", borderTop: border,
                 }}>
                   <span style={{ fontSize: 11, color: textMut }}>
-                    Showing <strong style={{ color: "#94a3b8" }}>{(tablePage - 1) * TABLE_PAGE_SIZE + 1}–{Math.min(tablePage * TABLE_PAGE_SIZE, filteredLeads.length)}</strong> of <strong style={{ color: "#94a3b8" }}>{filteredLeads.length}</strong>
+                    Showing <strong style={{ color: textMut }}>{(tablePage - 1) * TABLE_PAGE_SIZE + 1}–{Math.min(tablePage * TABLE_PAGE_SIZE, filteredLeads.length)}</strong> of <strong style={{ color: textMut }}>{filteredLeads.length}</strong>
                   </span>
                   <div style={{ display: "flex", gap: 4 }}>
                     <button className="btn-press" onClick={() => setTablePage(p => Math.max(1, p - 1))} disabled={tablePage === 1} style={{
