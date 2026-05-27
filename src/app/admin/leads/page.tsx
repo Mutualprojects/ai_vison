@@ -41,6 +41,13 @@ const PALETTE = {
 const CHART_COLORS = [PALETTE.sky, PALETTE.ice, PALETTE.gold, PALETTE.violet, PALETTE.coral, PALETTE.emerald];
 const KANBAN_COLS = ["New", "Contacted", "Qualified", "Proposal", "Closed"];
 
+const border = "1px solid var(--border)";
+const surface = "var(--surface)";
+const textPri = "var(--textPri)";
+const textMut = "var(--textMut)";
+const textSub = "var(--textSub)";
+
+
 /* ─────────────────────────────── GLOBAL CSS ────────────────────────────── */
 const CSS = `
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Syne:wght@700;800;900&family=JetBrains+Mono:wght@400;600&display=swap');
@@ -488,11 +495,11 @@ export default function AdminLeadsPage() {
   );
 
   // ─────────────────── TOKEN SHORTCUTS ────────────────────────────────────
-  const border = "1px solid var(--border)";
-  const surface = "var(--surface)";
-  const textPri = "var(--textPri)";
-  const textMut = "var(--textMut)";
-  const textSub = "var(--textSub)";
+  
+  
+  
+  
+  
 
   // ─────────────────── RENDER ─────────────────────────────────────────────
   return (
