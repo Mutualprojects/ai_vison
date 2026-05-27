@@ -100,6 +100,18 @@ export async function POST(req: Request) {
       });
     }
 
+    // Auto-inject headers if the sheet is completely empty to establish column structure
+    if (rows.length === 0) {
+      await sheets.spreadsheets.values.append({
+        spreadsheetId: sheetId,
+        range: `'${firstSheetName}'!A1:F1`,
+        valueInputOption: 'USER_ENTERED',
+        requestBody: {
+          values: [['Date Captured', 'Name', 'Company', 'Email', 'Phone', 'Website']]
+        }
+      });
+    }
+
     // Append the lead to the Google Sheet
     const response = await sheets.spreadsheets.values.append({
       spreadsheetId: sheetId,
