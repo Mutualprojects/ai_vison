@@ -2,7 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { kv } from '@vercel/kv';
 
-const dbDir = path.join(process.cwd(), 'data');
+const isProd = process.env.NODE_ENV === 'production';
+const dbDir = isProd ? '/tmp/data' : path.join(process.cwd(), 'data');
 const dbPath = path.join(dbDir, 'admins.json');
 
 // Interface for what an Admin looks like
