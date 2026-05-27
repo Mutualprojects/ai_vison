@@ -2,7 +2,10 @@ import { NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
 export async function GET(req: Request) {
-  const origin = new URL(req.url).origin;
+  let origin = new URL(req.url).origin;
+  if (process.env.NODE_ENV === 'production') {
+    origin = 'https://ai-vison-mauve.vercel.app';
+  }
   const redirectUri = `${origin}/api/auth/google/callback`;
   const oauth2Client = new google.auth.OAuth2(
     process.env.GOOGLE_CLIENT_ID,
